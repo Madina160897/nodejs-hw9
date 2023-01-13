@@ -1,11 +1,11 @@
 const { Schema } = require("mongoose");
 
-const PhonesSchema = new Schema({
-    module: String,
+const PhoneShema = new Schema({
+    model: String,
     price: Number,
     color: String,
-})
+});
 
 module.exports = {
-    PhonesSchema,
+    PhoneShema,
 }

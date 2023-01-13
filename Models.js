@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
-const { PhonesSchema } = require("./Schemas");
+const { PhoneShema } = require("./Schemas");
 
-const PhonesModel = mongoose.model("Phone", PhonesSchema);
+const PhoneModel = mongoose.model("Phone", PhoneShema);
 
 module.exports = {
-    PhonesModel,
+    PhoneModel,
 }
+
