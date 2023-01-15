@@ -12,20 +12,21 @@ router.get("/", (req, res) => {
     })
 });
 
-router.get("/:model", (req, res) => {
-    const model = req.params.model;
-    PhoneModel.findById(model, (err, result) =>{
-        if(err){
+router.get("/", (req, res) => {
+    let { model } = req.query.model;
+
+    PhoneModel.find({ model }, (err, result) => {
+        if (err) {
             res.status(500).send(err);
         } else {
             res.status(200).send(result)
         }
-    })
+    });
 });
 
 router.post("/", (req, res) => {
     const { model, price, color } = req.body;
-    const newPhone = new PhoneModel ({ model, price, color});
+    const newPhone = new PhoneModel({ model, price, color });
     newPhone.save((err) => {
         if (err) {
             res.status(500).send(err);
@@ -35,26 +36,22 @@ router.post("/", (req, res) => {
     })
 });
 
-router.put("/", (req, res) => {
+router.put("/:id", async (req, res) => {
+    const id = req.params.id
     const { model, price, color } = req.body;
-    const putPhone = new PhoneModel ({ model, price, color});
-    const modelPhone = putPhone.find(item => item.model === model);
-    modelPhone.model = model;
-    modelPhone.price = price;
-    modelPhone.color = color;
-    modelPhone.save((err) => {
+    await PhoneModel.findByIdAndUpdate(id, { model: model, price: price, color: color }, (err) => {
         if (err) {
             res.status(500).send(err);
         } else {
-            res.status(201).send("ok");
+            res.status(201).send("phone updated");
         }
     })
 });
 
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
-    PhoneModel.findByIdAndDelete(id, (err) =>{
-        if(err){
+    PhoneModel.findByIdAndDelete(id, (err) => {
+        if (err) {
             res.status(500).send(err);
         } else {
             res.status(200).send("deleted");
